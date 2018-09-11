@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Golden Mountain</title>
+        <style>
+            body{
+                background: #25be6548;
+                color: #2ecc71;
+            }
+            p{
+                margin: 0;
+            }
+            span {
+                font-size: 2em;
+            }
+            .winner,
+            .loser {
+                font-size: 2em;
+                border: #29c56a 1px solid;
+                width: 50px;
+                display: inline-block;
+                margin: -1px -5px 0px 0px;
+                padding: 5px 0 5px 0;
+                color: white;
+            }
+            .winner{
+                background-color: #2ecc71;
+            }
+            .loser{
+                color: #2ecc71
+            }
+        </style>
+    </head>
+    <body>
+        <input type="text" placeholder="height of the pyramid..."><br><button>Execute</button>
+        <div style="text-align: center;"></div>
+		<script>
+			;(function() {
+				var div = document.querySelector('div')
+				console.log("Leave a like")
+				document.querySelector("button").addEventListener('click', () => {    
+					var pos = sum = turn = max = turn = 0
+					var arr = max_value = value = []  
+					div.innerHTML = ""
+					var height = document.querySelector("[type=text]").value      
+					for (let i = 0; i < height; i++) {
+						arr.push(i)
+						arr[i] = []
+						for(let j = 0; j < (i + 1); j++) {
+							arr[i].push(Math.floor((Math.random()*10)))
+						}
+						div.innerHTML += "<p>" + arr[i].join("") + "</p>"
+					}
+					while(turn < 25000) {
+						pos = sum = 0
+						value = []
+						for (let i = 0; i < height; i++) {
+							var random = Math.floor((Math.random()*3))
+							random === 2 ? pos += 1 : random === 1 ? pos += 0 : false
+							pos < 0 ? pos = 0 : pos >= arr[i].length ? pos = (arr[i].length - 1) : pos
+							sum += arr[i][pos]
+							value.push(pos)
+						}
+						if (sum > max) {
+							max = sum
+							max_value = []
+							max_value = value
+						}
+						turn++
+					}
+					div.innerHTML += "<br><br><br>"
+					arr.forEach(v => {
+						v.forEach((value, i) => {
+							v[i] = "<span class='loser''>" + v[i] + "</span>"
+						})
+					})
+					for (let i = 0; i < height; i++) {
+						arr[i][max_value[i]] = /\d/.exec(arr[i][max_value[i]])
+						arr[i][max_value[i]] = "<span class='winner'>" + arr[i][max_value[i]] + "</span>"
+						div.childNodes[i].innerHTML = arr[i].join(" ")
+					}
+					div.innerHTML += "<br>" + "<span style='margin-top:-5px;'>MAXIMUM SUM &nbsp; &rarr; &nbsp;</span> <span class='winner'>" + max + "</span>"
+				})
+			})()
+		</script>
+    </body>
+</html>
